@@ -14,11 +14,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set environment variable to ensure Flask listens on all interfaces
-ENV FLASK_APP=app.py
+ENV FLASK_APP=bot.py
 ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_RUN_PORT=3978 
 
-# Expose the Flask default port
-EXPOSE 5000
+EXPOSE 3978
 
 # Command to run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:3978", "bot:app"]
+

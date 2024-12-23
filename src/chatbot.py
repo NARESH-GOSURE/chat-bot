@@ -29,7 +29,7 @@ class PDFChatBot(ActivityHandler):
             bot_response = self.bot_content(turn_context,text_response)
             self.transcript_property.append(bot_response)
 
-        if user_message == "bye":
+        elif user_message == "bye":
             text_response="Goodbye! Have a great day!"
             bot_response = self.bot_content(turn_context, text_response)
             await turn_context.send_activity(text_response)
