@@ -63,33 +63,3 @@ def upload_to_index(pdf_chunks_name):
     chunks = get_chuncked_json_output(pdf_chunks_name)
     index_documents_in_batches(chunks)
     check_indexer_status_and_run()
-
-   
-# upload_to_index()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# [{'name': 'id', 'type': 'Edm.String', 'searchable': True, 'filterable': True, 'retrievable': True, 'stored': True, 'sortable': True, 'facetable': True, 'key': True, 'indexAnalyzer': None, 'searchAnalyzer': None, 'analyzer': None, 'dimensions': None, 'vectorSearchProfile': None, 'vectorEncoding': None, 'synonymMaps': []},
-#   {'name': 'content', 'type': 'Edm.String', 'searchable': True, 'filterable': True, 'retrievable': True, 'stored': True, 'sortable': True, 'facetable': True, 'key': False, 'indexAnalyzer': None, 'searchAnalyzer': None, 'analyzer': None, 'dimensions': None, 'vectorSearchProfile': None, 'vectorEncoding': None, 'synonymMaps': []}, 
-# {'name': 'metadata', 'type': 'Edm.ComplexType', 'fields': [{'name': 'confidence', 'type': 'Edm.Double', 'searchable': False, 'filterable': True, 'retrievable': True, 'stored': True, 'sortable': True, 'facetable': True, 'key': False, 'indexAnalyzer': None, 'searchAnalyzer': None, 'analyzer': None, 'dimensions': None, 'vectorSearchProfile': None, 'vectorEncoding': None, 'synonymMaps': []}, 
-#                                                         {'name': 'polygon', 'type': 'Collection(Edm.Double)', 'searchable': False, 'filterable': False, 'retrievable': True, 'stored': True, 'sortable': False, 'facetable': True, 'key': False, 'indexAnalyzer': None, 'searchAnalyzer': None, 'analyzer': None, 'dimensions': None, 'vectorSearchProfile': None, 'vectorEncoding': None, 'synonymMaps': []}, 
-#                                                         {'name': 'page_number', 'type': 'Edm.Int32', 'searchable': False, 'filterable': True, 'retrievable': True, 'stored': True, 'sortable': True, 'facetable': True, 'key': False, 'indexAnalyzer': None, 'searchAnalyzer': None, 'analyzer': None, 'dimensions': None, 'vectorSearchProfile': None, 'vectorEncoding': None, 'synonymMaps': []}]}]
-
-
-

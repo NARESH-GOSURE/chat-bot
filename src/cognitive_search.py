@@ -15,8 +15,6 @@ def advanced_search(query_text,file_name,top=5):
         else:
             return "No results found for the given query."
 
-# a = advanced_search("what is insurance?","Introduction to Insurance.pdf", top=5)
-# print(a)
 
 
 

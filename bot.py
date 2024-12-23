@@ -8,9 +8,6 @@ from botframework.connector import ConnectorClient
 from botframework.connector.auth import MicrosoftAppCredentials
 import logging
 
-# # Define your Bot Framework App ID and Password
-# APP_ID = "8b9b5962-a422-40c4-9b0e-de200eaad667"
-# APP_PASSWORD = "c.q8Q~6OkyG4R~D5Hnuwkn15IpDTxZfL3-1VMc0E"
 
 if APP_ID and APP_PASSWORD:
     adapter_settings = BotFrameworkAdapterSettings(APP_ID, APP_PASSWORD)
@@ -20,8 +17,6 @@ else:
 SERVICE_URL='http://127.0.0.1:3978/api/messages'
 adapter = BotFrameworkAdapter(adapter_settings)
 
-# credentials = MicrosoftAppCredentials(APP_ID, APP_PASSWORD)
-# connector_client = ConnectorClient(credentials, base_url=SERVICE_URL)
 memory = MemoryStorage()
 conversation_state = ConversationState(memory)
 user_state = UserState(memory)
