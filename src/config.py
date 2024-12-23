@@ -20,7 +20,8 @@ ALLOWED_DOCUMENT_MODELS = ["prebuilt-layout", "prebuilt-read"]
 AZURE_ENDPOINT=os.getenv('AZURE_ENDPOINT')
 AZURE_KEY=os.getenv('AZURE_KEY')
 
-
+APP_ID = os.getenv("MicrosoftAppId")
+APP_PASSWORD = os.getenv("MicrosoftAppPassword")
 
 
 PDF_STORAGE_CONTAINER_NAME='pdf-storage'

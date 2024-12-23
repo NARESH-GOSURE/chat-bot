@@ -1,0 +1,18 @@
+{
+    "name": "pro",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "appId": "8b9b5962-a422-40c4-9b0e-de200eaad667",
+            "appPassword": "c.q8Q~6OkyG4R~D5Hnuwkn15IpDTxZfL3-1VMc0E",
+            "endpoint": "http://127.0.0.1:3978/api/messages",
+            "id": "5d8c7c80-c01c-11ef-8d9b-cf2bb578cf23",
+            "name": "http://127.0.0.1:3978/api/messages"
+        }
+    ],
+    "padlock": "",
+    "version": "2.0",
+    "overrides": null,
+    "path": "/home/naresh/Desktop/chat-bot/pro.bot"
+}

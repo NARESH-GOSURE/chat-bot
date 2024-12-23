@@ -23,11 +23,11 @@ def require_api_key(f):
 
 
 
-app = Flask(__name__)
-CORS(app)
+apps = Flask(__name__)
+CORS(apps)
 
 @require_api_key
-@app.route('/pdf/upload', methods=['POST'])
+@apps.route('/pdf/upload', methods=['POST'])
 def upload_file():
     try:
         if 'file' not in request.files:
@@ -51,7 +51,7 @@ def upload_file():
         return jsonify({"error": str(e)}), 500
 
 @require_api_key
-@app.route('/advanced-search', methods=['GET'])
+@apps.route('/advanced-search', methods=['GET'])
 def search():
     query = request.args.get('query')
     file_name = request.args.get('file_name')
@@ -72,4 +72,4 @@ def search():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    apps.run(debug=True)

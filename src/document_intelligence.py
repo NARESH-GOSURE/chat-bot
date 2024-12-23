@@ -28,7 +28,6 @@ def document_analysis_from_url(form_url):
 
 
 
-
 def analyze_pdf(pdf_path):
     from azure.ai.documentintelligence.models import AnalyzeOutputOption, AnalyzeResult
     document_intelligence_client = DocumentIntelligenceClient(endpoint=AZURE_ENDPOINT, credential=AzureKeyCredential(AZURE_KEY))
@@ -51,8 +50,8 @@ def analyze_pdf(pdf_path):
             text_content += line.content + "\n"
     return text_content
 
-def rename_pdf_file_name(file_name):
-    return file_name.replace(" ", "_")
+# def rename_pdf_file_name(file_name):
+#     return file_name.replace(" ", "_")
 
 def text_chunking_with_overlaping(text, pdf_file_name,chunk_size=800, overlap_size=150):
     chunks = []
