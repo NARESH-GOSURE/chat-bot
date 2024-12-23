@@ -82,7 +82,6 @@ def convert_structure_response_to_json_format(structured_response):
       "question": structured_response.question,
       "answer": structured_response.answer
   }
-#   json_output = json.dumps(final_result_dict, indent=4)
   return final_result_dict
 
 
@@ -91,6 +90,3 @@ def llm_response_generation(search_results, question: str):
     llm_structured_response = process_search_results_and_generate_llm_structured_response(search_results, question)
     final_response = convert_structure_response_to_json_format(llm_structured_response)
     return final_response
-
-
-# print(llm_response_generation(search,"monopoly"))

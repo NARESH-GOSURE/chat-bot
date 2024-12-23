@@ -50,8 +50,7 @@ def analyze_pdf(pdf_path):
             text_content += line.content + "\n"
     return text_content
 
-# def rename_pdf_file_name(file_name):
-#     return file_name.replace(" ", "_")
+
 
 def text_chunking_with_overlaping(text, pdf_file_name,chunk_size=800, overlap_size=150):
     chunks = []
