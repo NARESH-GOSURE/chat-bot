@@ -1,6 +1,6 @@
 import asyncio
 from flask import Flask, request, jsonify
-from botbuilder.core import BotFrameworkAdapter, BotFrameworkAdapterSettings, TurnContext, ConversationState, UserState, MemoryStorage
+from botbuilder.core import BotFrameworkAdapter, BotFrameworkAdapterSettings, ConversationState, UserState, MemoryStorage
 from botbuilder.schema import Activity
 from src.chatbot import PDFChatBot 
 from src.config import APP_ID,APP_PASSWORD
