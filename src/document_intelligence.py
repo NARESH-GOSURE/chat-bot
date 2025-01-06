@@ -2,10 +2,14 @@ from flask import Flask, request, jsonify, Blueprint
 from azure.ai.documentintelligence import DocumentIntelligenceClient
 from azure.ai.documentintelligence.models import AnalyzeDocumentRequest, ContentFormat
 from azure.core.credentials import AzureKeyCredential
+from openai import AzureOpenAI
 from .config import PDF_STORAGE_CONTAINER_NAME
 from .config import AZURE_ENDPOINT,AZURE_KEY
 from .blob_storage import get_pdf_from_blob,upload_chunks_to_azure_blob
-
+from .config import AZURE_OPENAI_API_VERSION, AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_KEY, LLM_MODEL
+from pydantic import BaseModel, Field
+from langchain.output_parsers import PydanticOutputParser
+from langchain.prompts import PromptTemplate
 
 def document_analysis_from_url(form_url):
     document_intelligence_client = DocumentIntelligenceClient(
@@ -48,6 +52,7 @@ def analyze_pdf(pdf_path):
     for page in result.pages:
         for line in page.lines:
             text_content += line.content + "\n"
+            # print(result.pages)
     return text_content
 
 
@@ -74,9 +79,62 @@ def text_chunking_with_overlaping(text, pdf_file_name,chunk_size=800, overlap_si
     return chunks
 
 
+class DocumentClassificationResponse(BaseModel):
+    document_type: str = Field(description="The classified type of the document (Technical Specifications, Pricing Templates, Evaluation Criteria, FAR Proposal Documents, or Other)")
+
+def get_pdf_document_type(pdf_content: str):
+    parser = PydanticOutputParser(pydantic_object=DocumentClassificationResponse)
+    client = AzureOpenAI(
+        api_version=AZURE_OPENAI_API_VERSION,
+        azure_endpoint=f"{AZURE_OPENAI_ENDPOINT}?api-version={AZURE_OPENAI_API_VERSION}",
+        api_key=AZURE_OPENAI_API_KEY
+    )
+
+    template = """
+    You are an AI document classifier. Analyze the following PDF content and classify it into one of the categories below based on the content and structure:
+
+    Categories:
+    1. Technical Specifications
+    2. Pricing Templates
+    3. Evaluation Criteria
+    4. FAR Proposal Documents
+
+    If the document does not fit any of these categories, classify it as "Other".
+
+    ### PDF Content:
+    {pdf_content}
+
+    ### Instructions:
+    - Return the document type from the list.
+    - If the document does not clearly match any category, return 'Other' and briefly explain why.
+
+    ### Classification:
+    {format_instructions}
+    """
+
+    prompt = PromptTemplate(
+        template=template,
+        input_variables=["pdf_content"],
+        partial_variables={"format_instructions": parser.get_format_instructions()},
+    )
+
+    formatted_prompt = prompt.format(pdf_content=pdf_content)
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {"role": "user", "content": formatted_prompt}
+        ],
+        model=LLM_MODEL,
+    )
+    
+    if chat_completion.choices:
+        parsed_output = parser.invoke(chat_completion.choices[0].message.content)
+        return parsed_output.document_type
+
 def extract_pdf_and_store_chunks_in_blob(PDF_FILE_NAME):
     pdf_data = get_pdf_from_blob(PDF_STORAGE_CONTAINER_NAME, PDF_FILE_NAME)
     extracted_content_pdf = analyze_pdf(pdf_data)
+    document_type = get_pdf_document_type(extracted_content_pdf)
+    # print(document_type)
     pdf_chunks_output = text_chunking_with_overlaping(extracted_content_pdf,PDF_FILE_NAME)
     chunk_blob_storage_name = upload_chunks_to_azure_blob(pdf_chunks_output,PDF_FILE_NAME)
     return chunk_blob_storage_name
